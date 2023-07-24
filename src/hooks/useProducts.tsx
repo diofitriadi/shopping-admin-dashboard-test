@@ -1,48 +1,65 @@
-// hooks/useProducts.ts
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import { ProductsResponse, Product } from "./type";
+import category from "@/pages/api/category";
+import brand from "@/pages/api/brand";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const useProducts = () => {
   // Search
   const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState("");
-  // Category list
-  const [categories, setCategories] = useState<string[]>([]);
+  // Category
+  const [selectedCategory, setSelectedCategory] = useState("");
+  // Brand
+  const [selectedBrand, setSelectedBrand] = useState("");
   // Pagination
   const limit = 10; // Items per page
   const [page, setPage] = useState(1);
-  const skip = (page - 1) * limit;
 
-  // Fetch categories on mount
-  useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products/categories")
-      .then((res) => {
-        const sortedCategories = res.data.sort((a: string, b: any) =>
-          a.localeCompare(b)
-        );
-        setCategories(sortedCategories);
-      })
-      .catch((error) => console.log(error)); // handle error here
-  }, []);
+  // Add state for price range
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+
+  // Add state for all products
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  // Add state for paginated products
+  const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
 
   // Build URL
-  // This one still wrong
-  const url = `https://dummyjson.com/products${
-    category ? "/category/" + category : ""
-  }?limit=${limit}&skip=${skip}${
-    searchQuery ? "&search?q=" + searchQuery : ""
-  }`;
+  let url = `https://dummyjson.com/products`;
+
+  if (searchQuery) {
+    url += `/search?q=${searchQuery}`;
+  }
+
+  url += `${searchQuery ? "&" : "?"}limit=100`;
 
   const { data, error } = useSWR<ProductsResponse>(url, fetcher);
 
+  useEffect(() => {
+    if (data) {
+      const filteredProducts = data.products.filter(
+        (product: Product) =>
+          product.price >= priceRange.min &&
+          product.price <= priceRange.max &&
+          (selectedCategory ? product.category === selectedCategory : true) &&
+          (selectedBrand ? product.brand === selectedBrand : true) // Filter by brand
+      );
+      setAllProducts(filteredProducts);
+    }
+  }, [data, priceRange, selectedCategory, selectedBrand]);
+
+  // When allProducts or page changes, calculate the new paginatedProducts
+  useEffect(() => {
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    setPaginatedProducts(allProducts.slice(start, end));
+  }, [allProducts, page]);
+
   const isLoading = !error && !data;
-  const products: Product[] = data ? data.products : [];
-  const total: number = data ? data.total : 0;
+
+  const total: number = allProducts.length;
   const numPages = Math.ceil(total / limit);
 
   const nextPage = () => setPage((prev) => Math.min(prev + 1, numPages));
@@ -51,7 +68,7 @@ export const useProducts = () => {
   return {
     isLoading,
     error,
-    products,
+    products: paginatedProducts,
     nextPage,
     prevPage,
     page,
@@ -59,8 +76,13 @@ export const useProducts = () => {
     numPages,
     searchQuery,
     setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedBrand,
+    setSelectedBrand,
+    priceRange,
+    setPriceRange,
     category,
-    categories, // Provide categories list
-    setCategory, // Allow setting current category
+    brand,
   };
 };

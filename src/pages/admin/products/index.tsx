@@ -16,9 +16,14 @@ const ProductsPage = () => {
     setPage,
     searchQuery,
     setSearchQuery,
-    categories,
+    priceRange,
+    setPriceRange,
     category,
-    setCategory,
+    selectedCategory,
+    setSelectedCategory,
+    brand,
+    selectedBrand,
+    setSelectedBrand,
   } = useProducts();
   if (error) return <div>Failed to load</div>;
 
@@ -27,7 +32,20 @@ const ProductsPage = () => {
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value); // handle category change
+    setSelectedCategory(e.target.value); // handle category change
+  };
+
+  const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBrand(e.target.value); // handle brand change
+  };
+
+  console.log(selectedCategory, "ini kategori");
+
+  const handlePriceRangeChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "min" | "max"
+  ) => {
+    setPriceRange((prev) => ({ ...prev, [type]: e.target.value })); // handle price range change
   };
 
   const handlePageClick = (pageNum: number) => {
@@ -55,19 +73,43 @@ const ProductsPage = () => {
             placeholder="Search products..."
             className="px-2 py-1 border mb-5 mr-2"
           />
+          <input
+            type="number"
+            value={priceRange.min}
+            onChange={(e) => handlePriceRangeChange(e, "min")}
+            placeholder="Minimum price..."
+            className="px-2 py-1 border mb-5 mr-2"
+          />
+          <input
+            type="number"
+            value={priceRange.max}
+            onChange={(e) => handlePriceRangeChange(e, "max")}
+            placeholder="Maximum price..."
+            className="px-2 py-1 border mb-5 mr-2"
+          />
           <select
-            value={category}
+            value={selectedCategory}
             onChange={handleCategoryChange}
-            className="border px-2 py-1 capitalize"
+            className="border px-2 py-1 "
           >
-            <option value="">All</option>
-            {categories?.map((categoryName) => (
-              <option
-                className="capitalize"
-                key={categoryName}
-                value={categoryName}
-              >
+            <option value="">All Category</option>
+            {category?.map((categoryName) => (
+              <option className="" key={categoryName} value={categoryName}>
                 {categoryName}
+              </option>
+            ))}
+
+            {/* add more options based on the categories you have */}
+          </select>
+          <select
+            value={selectedBrand}
+            onChange={handleBrandChange}
+            className="border px-2 py-1 "
+          >
+            <option value="">All Brand</option>
+            {brand?.map((brandName) => (
+              <option className="" key={brandName} value={brandName}>
+                {brandName}
               </option>
             ))}
 
