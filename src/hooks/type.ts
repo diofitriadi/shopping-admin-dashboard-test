@@ -24,6 +24,8 @@ export interface ProductsResponse {
 
 // Cart
 export type ProductInCart = {
+  category: ReactNode;
+  brand: ReactNode;
   id: number;
   title: string;
   price: number;

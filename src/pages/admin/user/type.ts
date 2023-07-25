@@ -10,6 +10,8 @@ export interface User {
 export interface Product {
   id: number;
   title: string;
+  brand: string;
+  category: string;
   price: number;
   quantity: number;
   total: number;
@@ -19,6 +21,7 @@ export interface Product {
 
 // Define interface for Cart
 export interface Cart {
+  products: Product[];
   carts: {
     id: number;
     products: Product[];
@@ -31,4 +34,5 @@ export interface Cart {
   total: number;
   skip: number;
   limit: number;
+  totalQuantity: number;
 }
