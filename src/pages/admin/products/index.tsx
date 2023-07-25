@@ -77,10 +77,14 @@ const ProductsPage = () => {
             variant="outlined"
             value={searchQuery}
             onChange={handleSearchChange}
-            className="mb-5 mr-2"
+            sx={{ marginBottom: 2, marginRight: 1 }}
             size="small"
           />
-          <FormControl variant="outlined" className="mb-5 mr-2" size="small">
+          <FormControl
+            variant="outlined"
+            sx={{ marginBottom: 2, marginRight: 1 }}
+            size="small"
+          >
             <InputLabel id="category-label">Category</InputLabel>
             <Select
               labelId="category-label"
@@ -104,7 +108,11 @@ const ProductsPage = () => {
               {/* add more options based on the categories you have */}
             </Select>
           </FormControl>
-          <FormControl variant="outlined" className="mb-5 mr-2" size="small">
+          <FormControl
+            variant="outlined"
+            sx={{ marginBottom: 2, marginRight: 1 }}
+            size="small"
+          >
             <InputLabel id="brand-label">Brand</InputLabel>
             <Select
               labelId="brand-label"
@@ -127,7 +135,8 @@ const ProductsPage = () => {
           <Button
             variant="outlined"
             onClick={resetFilters}
-            className="px-2 py-1 border mb-5 mr-2 w-[150px]"
+            className="px-2 py-1 border w-[150px]"
+            sx={{ marginBottom: 2, marginRight: 1 }}
           >
             Reset Filters
           </Button>
@@ -148,7 +157,7 @@ const ProductsPage = () => {
                 valueLabelFormat={(value) => `$${value}`}
                 min={0}
                 max={2000}
-                className="w-[300px] mx-10"
+                sx={{ width: "300px", marginLeft: 5, marginRight: 5 }}
               />
               <div className="mt-0.5">${priceRange.max}</div>
             </div>
@@ -156,7 +165,8 @@ const ProductsPage = () => {
             <Button
               variant="outlined"
               onClick={resetPriceRange}
-              className="px-2 py-1 border mb-5 mr-2 w-[150px]"
+              className="px-2 py-1 border w-[150px]"
+              sx={{ marginBottom: 2, marginRight: 1 }}
             >
               Reset Price
             </Button>
@@ -190,7 +200,7 @@ const ProductsPage = () => {
                   <td className="border px-4 py-2">{product.title}</td>
                   <td className="border px-4 py-2">{product.brand}</td>
                   <td className="border px-4 py-2">${product.price}</td>
-                  <td className="border px-4 py-2">{product.stock} units</td>
+                  <td className="border px-4 py-2">{product.stock}</td>
                   <td className="border px-4 py-2 capitalize">
                     {product.category}
                   </td>
