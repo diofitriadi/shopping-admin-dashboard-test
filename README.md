@@ -25,7 +25,7 @@ The project should now be running at `http://localhost:3000/`
 
 ## Deployed Application
 
-The application is deployed on Vercel and can be accessed [here](#)
+The application is deployed on Vercel and can be accessed [here](https://shopping-admin-dashboard-test.vercel.app/)
 
 ## Contributions
 
@@ -33,5 +33,5 @@ This project welcomes contributions. To contribute, you can open an issue or cre
 
 ## Contact
 
-If you have any questions, issues, or feedback, please contact me through my email: your_email@example.com.
+If you have any questions, issues, or feedback, please contact me through my email: fitriadidio@gmail.com
 
