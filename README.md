@@ -27,10 +27,6 @@ The project should now be running at `http://localhost:3000/`
 
 The application is deployed on Vercel and can be accessed [here](https://shopping-admin-dashboard-test.vercel.app/)
 
-## Contributions
-
-This project welcomes contributions. To contribute, you can open an issue or create a pull request.
-
 ## Contact
 
 If you have any questions, issues, or feedback, please contact me through my email: fitriadidio@gmail.com
