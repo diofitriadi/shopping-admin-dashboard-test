@@ -12,6 +12,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Typography,
 } from "@mui/material";
 
 const ProductsPage = () => {
@@ -70,8 +71,9 @@ const ProductsPage = () => {
   return (
     <div className="flex w-full">
       <Sidebar />
-      <div className="flex flex-col w-full px-4 py-4">
+      <div className="flex flex-col w-full px-4 py-3">
         <div>
+          <h5 className="font-bold mb-2 mt-5 md:mt-0">Product List</h5>
           <TextField
             label="Search products..."
             variant="outlined"
@@ -132,17 +134,16 @@ const ProductsPage = () => {
               {/* add more options based on the categories you have */}
             </Select>
           </FormControl>
-          <Button
-            variant="outlined"
+          <button
             onClick={resetFilters}
-            className="px-2 py-1 border w-[150px]"
-            sx={{ marginBottom: 2, marginRight: 1 }}
+            className="px-3 py-2.5 border text-sm w-[150px] bg-blue-500 hover:bg-blue-400 text-white font-bold rounded-xl mb-2"
           >
             Reset Filters
-          </Button>
+          </button>
         </div>
         <div>
-          <div className="flex gap-10">
+          <div className="flex flex-col md:flex-row gap-5 md:gap-10">
+            <Typography>Price Range : </Typography>
             <div className="flex justify-between">
               <div className="w-[10px]">${priceRange.min}</div>
               <Slider
@@ -157,20 +158,17 @@ const ProductsPage = () => {
                 valueLabelFormat={(value) => `$${value}`}
                 min={0}
                 max={2000}
-                sx={{ width: "300px", marginLeft: 5, marginRight: 5 }}
+                sx={{ width: "300px", marginLeft: 4, marginRight: 3 }}
               />
               <div className="mt-0.5">${priceRange.max}</div>
             </div>
-
-            <Button
-              variant="outlined"
-              onClick={resetPriceRange}
-              className="px-2 py-1 border w-[150px]"
-              sx={{ marginBottom: 2, marginRight: 1 }}
-            >
-              Reset Price
-            </Button>
           </div>
+          <button
+            onClick={resetPriceRange}
+            className="mt-2 px-2 py-1 border text-sm w-[100px] bg-blue-500 hover:bg-blue-400 text-white font-bold rounded mb-2"
+          >
+            Reset Price
+          </button>
         </div>
 
         <div className="relative w-full">
@@ -183,7 +181,7 @@ const ProductsPage = () => {
           <table
             className={`${
               isLoading ? " h-[450px]" : ""
-            } w-full text-left rounded-lg overflow-hidden shadow-lg`}
+            } w-full text-left rounded-lg overflow-hidden shadow-lg text-sm`}
           >
             <thead className="bg-blue-500 text-white">
               <tr>
@@ -230,7 +228,7 @@ const ProductsPage = () => {
           </table>
         </div>
 
-        <div className="flex mt-4">
+        <div className="flex justify-end mt-4">
           <button
             onClick={prevPage}
             disabled={page === 1}

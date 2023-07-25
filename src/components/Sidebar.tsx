@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { Box, Button, useMediaQuery, Drawer, IconButton } from "@mui/material";
+import { useMediaQuery, Drawer, IconButton, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 
@@ -21,28 +21,36 @@ const Sidebar = () => {
   };
 
   const DrawerContent = () => (
-    <Box className="w-64 h-screen p-8 bg-gray-800 text-white flex flex-col justify-between">
+    <Box className="w-40 h-screen p-8 bg-blue-500 text-white flex flex-col justify-between">
       <h2 className="text-xl mb-6">Dashboard</h2>
       <div className="flex flex-col gap-6 text-lg">
         <Link href="/admin/products">
-          <Button variant="text" color="primary">
+          <div
+            className={`p-1 rounded ${
+              router.pathname === "/admin/products"
+                ? "bg-blue-900 text-white"
+                : ""
+            }`}
+          >
             Products
-          </Button>
+          </div>
         </Link>
         <Link href="/admin/cart">
-          <Button variant="text" color="primary">
+          <div
+            className={`p-1 rounded ${
+              router.pathname === "/admin/cart" ? "bg-blue-900 text-white" : ""
+            }`}
+          >
             Cart
-          </Button>
+          </div>
         </Link>
       </div>
-      <Button
+      <button
         onClick={handleLogout}
-        variant="contained"
-        color="error"
-        className="mt-4 w-full py-2 text-center text-white rounded bg-red-500 hover:bg-red-600"
+        className="mt-4 w-full py-1 text-center text-white rounded bg-red-500 hover:bg-red-600"
       >
         Logout
-      </Button>
+      </button>
     </Box>
   );
 
@@ -50,7 +58,7 @@ const Sidebar = () => {
     <div
       className={` ${
         isMobile
-          ? "absolute left-[-4%] top-[-3%] flex justify-center items-center rounded-full bg-black h-14 w-14"
+          ? "absolute left-[-4%] top-[-3%] flex justify-center items-center rounded-full bg-blue-600 h-14 w-14"
           : ""
       }`}
     >

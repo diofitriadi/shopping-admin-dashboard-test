@@ -29,6 +29,11 @@ export default function CartTable() {
       </div>
     );
 
+  const handlePageClick = (pageNum: number) => {
+    if (pageNum < 1 || pageNum > numPages) return;
+    setPage(pageNum);
+  };
+
   // Generate page numbers
   const startPage = Math.max(1, page - 2);
   const endPage = Math.min(numPages, startPage + 4);
@@ -36,19 +41,16 @@ export default function CartTable() {
     { length: endPage - startPage + 1 },
     (_, i) => startPage + i
   );
-
-  console.log(carts, "ini cart nya");
-
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-grow px-8 py-4 overflow-auto">
-        <Typography fontWeight={700}>Carts Detail</Typography>
-        <table className="h-[400px] w-full text-left mt-5">
+      <div className="flex-grow px-8 py-4 overflow-auto h-[600px]">
+        <h5 className="font-bold mt-0 md:mt-0">Carts Detail</h5>
+        <table className=" w-full text-left text-sm mt-5">
           <thead className="bg-blue-500 text-white">
             <tr>
               <th className="px-4 py-2">Cart No</th>
-              <th className="px-4 py-2">No of Items</th>
+              <th className="px-4 py-2">Number of Items</th>
               <th className="px-4 py-2">Qty</th>
               <th className="px-4 py-2">Details</th>
             </tr>
@@ -65,19 +67,17 @@ export default function CartTable() {
 
                 <td className="border px-4 py-2">
                   {cart.totalProducts === 0 && cart.totalQuantity === 0 ? (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      color="primary"
+                    <button
+                      className="bg-blue-500 text-white font-bold py-1 px-2 rounded opacity-50 cursor-not-allowed"
                       disabled
                     >
-                      Details
-                    </Button>
+                      detail
+                    </button>
                   ) : (
                     <Link href={`/admin/cart/${cart.id}`}>
-                      <Button variant="contained" size="small" color="primary">
-                        Details
-                      </Button>
+                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                        detail
+                      </button>
                     </Link>
                   )}
                 </td>
@@ -85,34 +85,31 @@ export default function CartTable() {
             ))}
           </tbody>
         </table>
-        <div className="flex mt-4 space-x-2">
+        <div className="flex justify-end mt-4">
           <button
-            className={`px-2 py-1 border border-blue-500 rounded ${
-              page === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
             onClick={prevPage}
             disabled={page === 1}
+            className="px-3 py-1 rounded bg-blue-500 text-white mr-2"
           >
             Previous
           </button>
-          {pages.map((number) => (
+          {pages.map((pageNum) => (
             <button
-              key={number}
-              className={`px-2 py-1 border border-blue-500 rounded ${
-                page === number ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              onClick={() => setPage(number)}
-              disabled={page === number}
+              key={pageNum}
+              onClick={() => handlePageClick(pageNum)}
+              className={`px-3 py-1 rounded ${
+                pageNum === page
+                  ? "bg-blue-700 text-white"
+                  : "bg-blue-200 text-blue-700"
+              } mr-2`}
             >
-              {number}
+              {pageNum}
             </button>
           ))}
           <button
-            className={`px-2 py-1 border border-red-500 rounded ${
-              page === numPages ? "opacity-50 cursor-not-allowed" : ""
-            }`}
             onClick={nextPage}
             disabled={page === numPages}
+            className="px-3 py-1 rounded bg-blue-500 text-white"
           >
             Next
           </button>

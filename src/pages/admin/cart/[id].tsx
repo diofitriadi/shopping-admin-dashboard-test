@@ -107,7 +107,7 @@ function CartDetail() {
         </Typography>
         <div className="w-full text-left rounded-lg overflow-hidden shadow-lg mt-4">
           <table className="w-full text-left">
-            <thead className="bg-blue-600 text-white">
+            <thead className="bg-blue-500 text-white">
               <tr>
                 <th className="px-4 py-2">Product Name</th>
                 <th className="px-4 py-2">Brand</th>

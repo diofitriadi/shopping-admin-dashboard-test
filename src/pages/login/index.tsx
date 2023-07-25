@@ -41,7 +41,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-300">
+    <div className="flex items-center justify-center h-screen bg-gray-500">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col w-[80%] md:w-1/3 p-4 bg-white shadow-md rounded-md"
@@ -63,7 +63,7 @@ const LoginPage = () => {
         />
         <button
           type="submit"
-          className="p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-md"
+          className="mt-2 p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-md"
         >
           Submit
         </button>
