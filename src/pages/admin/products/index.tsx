@@ -34,6 +34,7 @@ const ProductsPage = () => {
     brand,
     selectedBrand,
     setSelectedBrand,
+    resetFilters,
   } = useProducts();
   if (error) return <div>Failed to load</div>;
 
@@ -47,13 +48,6 @@ const ProductsPage = () => {
 
   const handleBrandChange = (event: SelectChangeEvent<string>) => {
     setSelectedBrand(event.target.value);
-  };
-
-  const handlePriceRangeChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: "min" | "max"
-  ) => {
-    setPriceRange((prev) => ({ ...prev, [type]: e.target.value })); // handle price range change
   };
 
   const resetPriceRange = () => {
@@ -130,27 +124,15 @@ const ProductsPage = () => {
               {/* add more options based on the categories you have */}
             </Select>
           </FormControl>
+          <Button
+            variant="outlined"
+            onClick={resetFilters}
+            className="px-2 py-1 border mb-5 mr-2 w-[150px]"
+          >
+            Reset Filters
+          </Button>
         </div>
-        <div className="">
-          <div className="flex">
-            {/* <input
-              type="number"
-              value={priceRange.min}
-              onChange={(e) => handlePriceRangeChange(e, "min")}
-              placeholder="Minimum price..."
-              className="px-2 py-1 border mb-5 mr-2"
-              disabled
-            />
-            <input
-              type="number"
-              value={priceRange.max}
-              onChange={(e) => handlePriceRangeChange(e, "max")}
-              placeholder="Maximum price..."
-              className="px-2 py-1 border mb-5 mr-2"
-              disabled
-            /> */}
-          </div>
-
+        <div>
           <div className="flex gap-10">
             <div className="flex justify-between">
               <div className="w-[10px]">${priceRange.min}</div>

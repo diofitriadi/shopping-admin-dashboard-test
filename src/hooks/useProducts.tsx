@@ -8,18 +8,26 @@ import brand from "@/pages/api/brand";
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const useProducts = () => {
-  // Search
   const [searchQuery, setSearchQuery] = useState("");
-  // Category
   const [selectedCategory, setSelectedCategory] = useState("");
-  // Brand
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
+
+  useEffect(() => {
+    const localSearchQuery = localStorage.getItem("searchQuery");
+    const localSelectedCategory = localStorage.getItem("selectedCategory");
+    const localSelectedBrand = localStorage.getItem("selectedBrand");
+    const localPriceRange = localStorage.getItem("priceRange");
+
+    if (localSearchQuery) setSearchQuery(localSearchQuery);
+    if (localSelectedCategory) setSelectedCategory(localSelectedCategory);
+    if (localSelectedBrand) setSelectedBrand(localSelectedBrand);
+    if (localPriceRange) setPriceRange(JSON.parse(localPriceRange));
+  }, []);
+
   // Pagination
   const limit = 10; // Items per page
   const [page, setPage] = useState(1);
-
-  // Add state for price range
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
 
   // Add state for all products
   const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -36,6 +44,18 @@ export const useProducts = () => {
   url += `${searchQuery ? "&" : "?"}limit=100`;
 
   const { data, error } = useSWR<ProductsResponse>(url, fetcher);
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory("");
+    setSelectedBrand("");
+    setPriceRange({ min: 0, max: 5000 });
+
+    localStorage.setItem("searchQuery", "");
+    localStorage.setItem("selectedCategory", "");
+    localStorage.setItem("selectedBrand", "");
+    localStorage.setItem("priceRange", JSON.stringify({ min: 0, max: 5000 }));
+  };
 
   useEffect(() => {
     if (data) {
@@ -56,6 +76,14 @@ export const useProducts = () => {
     const end = start + limit;
     setPaginatedProducts(allProducts.slice(start, end));
   }, [allProducts, page]);
+
+  // Save states to local storage whenever they change
+  useEffect(() => {
+    localStorage.setItem("searchQuery", searchQuery);
+    localStorage.setItem("selectedCategory", selectedCategory);
+    localStorage.setItem("selectedBrand", selectedBrand);
+    localStorage.setItem("priceRange", JSON.stringify(priceRange));
+  }, [searchQuery, selectedCategory, selectedBrand, priceRange]);
 
   const isLoading = !error && !data;
 
@@ -84,5 +112,6 @@ export const useProducts = () => {
     setPriceRange,
     category,
     brand,
+    resetFilters,
   };
 };

@@ -50,6 +50,14 @@ export const useUsers = () => {
             };
           }
         });
+
+        // Sort users based on totalProducts in cart
+        const sortedUsers = [...data.users].sort(
+          (a, b) =>
+            newCartItems[b.id].totalProducts - newCartItems[a.id].totalProducts
+        );
+        setAllUsers(sortedUsers);
+
         setCartItems(newCartItems);
       });
     }

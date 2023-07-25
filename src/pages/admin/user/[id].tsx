@@ -1,18 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-} from "@mui/material";
 import Sidebar from "@/components/Sidebar";
 import { User, Product, Cart } from "./type";
+import { Typography } from "@mui/material";
 
 function CartDetail() {
   const router = useRouter();
@@ -51,59 +42,53 @@ function CartDetail() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <TableContainer
-        component={Paper}
-        className="flex-grow"
-        style={{ height: "100vh" }}
-      >
+      <div className="flex-grow px-8 py-4 overflow-auto">
         {/* Display user info here */}
         {user && (
-          <>
-            <Typography variant="h5" component="div" gutterBottom>
+          <div className="mb-4">
+            <Typography variant="h5" gutterBottom>
               User Name: {user.firstName} {user.lastName}
             </Typography>
-            <Typography variant="h6" component="div" gutterBottom>
+            <Typography variant="subtitle1" gutterBottom>
               Email: {user.email}
             </Typography>
-          </>
+          </div>
         )}
 
-        <Typography variant="h4" component="div" gutterBottom>
+        <Typography variant="h4" gutterBottom>
           Cart Details
         </Typography>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell>Product Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Total</TableCell>
-              <TableCell>Discount</TableCell>
-              <TableCell>Discounted Price</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cart?.carts[0]?.products.map((product) => (
-              <TableRow key={product.id}>
-                <TableCell>{product.title}</TableCell>
-                <TableCell>{product.price}</TableCell>
-                <TableCell>{product.quantity}</TableCell>
-                <TableCell>{product.total}</TableCell>
-                <TableCell>{product.discountPercentage}%</TableCell>
-                <TableCell>{product.discountedPrice}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <div className="w-full text-left rounded-lg overflow-hidden shadow-lg">
+          <table className="w-full text-left  ">
+            <thead className="bg-blue-600 text-white">
+              <tr>
+                <th className="px-4 py-2">Product Name</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">Quantity</th>
+                <th className="px-4 py-2">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart?.carts[0]?.products.map((product) => (
+                <tr key={product.id}>
+                  <td className="px-4 py-2 border">{product.title}</td>
+                  <td className="px-4 py-2 border">${product.price}</td>
+                  <td className="px-4 py-2 border">{product.quantity}</td>
+                  <td className="px-4 py-2 border">${product.total}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <Typography variant="h6" component="div" gutterBottom>
-          Total Price: {cart?.carts[0]?.total}
+          Total Price: ${cart?.carts[0]?.total}
         </Typography>
         <Typography variant="h6" component="div" gutterBottom>
-          Discounted Total: {cart?.carts[0]?.discountedTotal}
+          Total Quantity: {cart?.carts[0]?.totalQuantity} units
         </Typography>
-      </TableContainer>
+      </div>
     </div>
   );
 }
