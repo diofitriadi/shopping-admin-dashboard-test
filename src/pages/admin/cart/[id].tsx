@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "@/components/Sidebar";
-import { User, Product, Cart } from "../user/type";
+import { User, Product, Cart } from "../../../hooks/user/type";
 import { Typography, Card, CardContent } from "@mui/material";
 import { ProductInCart } from "@/hooks/type";
 
