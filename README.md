@@ -1,38 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# E-commerce Dashboard
 
-First, run the development server:
+E-commerce Dashboard is an admin platform for an e-commerce system that allows an admin to manage products and view items in the shopping carts. The project is built using Next.js and is fully responsive across different devices.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- View the list of products in a table format.
+- Filter products based on Brand, Product, Price Range, and Category.
+- Search products based on the Product Name.
+- Applied filters and searches are autosaved.
+- View a chart that shows the number of items per Product.
+- View the list of carts that are available in a table format.
+- View the details of a cart in a separate card detail page.
+- Pagination in the products & carts table.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Clone this repository: git clone https://github.com/diofitriadi/shopping-admin-dashboard-test
+2. Change directory into the project folder: cd https://github.com/diofitriadi/shopping-admin-dashboard-test
+3. Install dependencies: npm install
+4. Run the project: npm run dev
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The project should now be running at `http://localhost:3000/`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Deployed Application
 
-## Learn More
+The application is deployed on Vercel and can be accessed [here](#)
 
-To learn more about Next.js, take a look at the following resources:
+## Contributions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project welcomes contributions. To contribute, you can open an issue or create a pull request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
+If you have any questions, issues, or feedback, please contact me through my email: your_email@example.com.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

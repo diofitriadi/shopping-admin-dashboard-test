@@ -44,7 +44,7 @@ export default function CartTable() {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-grow px-8 py-4 overflow-auto h-[600px]">
+      <div className="flex-grow px-8 py-4 overflow-auto h-full md:h-[700px]">
         <h5 className="font-bold mt-0 md:mt-0">Carts Detail</h5>
         <table className=" w-full text-left text-sm mt-5">
           <thead className="bg-blue-500 text-white">
