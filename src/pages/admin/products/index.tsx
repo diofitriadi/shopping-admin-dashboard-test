@@ -3,6 +3,16 @@ import React from "react";
 import { useProducts } from "@/hooks/useProducts";
 import Sidebar from "@/components/Sidebar";
 import { FaSpinner } from "react-icons/fa";
+import Slider from "@mui/material/Slider";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+} from "@mui/material";
 
 const ProductsPage = () => {
   const {
@@ -31,21 +41,23 @@ const ProductsPage = () => {
     setSearchQuery(e.target.value); // handle search query change
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.target.value); // handle category change
+  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCategory(event.target.value);
   };
 
-  const handleBrandChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedBrand(e.target.value); // handle brand change
+  const handleBrandChange = (event: SelectChangeEvent<string>) => {
+    setSelectedBrand(event.target.value);
   };
-
-  console.log(selectedCategory, "ini kategori");
 
   const handlePriceRangeChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "min" | "max"
   ) => {
     setPriceRange((prev) => ({ ...prev, [type]: e.target.value })); // handle price range change
+  };
+
+  const resetPriceRange = () => {
+    setPriceRange({ min: 0, max: 5000 });
   };
 
   const handlePageClick = (pageNum: number) => {
@@ -64,57 +76,109 @@ const ProductsPage = () => {
   return (
     <div className="flex w-full">
       <Sidebar />
-      <div className="flex flex-col w-full px-4 py-5">
+      <div className="flex flex-col w-full px-4 py-4">
         <div>
-          <input
-            type="text"
+          <TextField
+            label="Search products..."
+            variant="outlined"
             value={searchQuery}
             onChange={handleSearchChange}
-            placeholder="Search products..."
-            className="px-2 py-1 border mb-5 mr-2"
+            className="mb-5 mr-2"
+            size="small"
           />
-          <input
-            type="number"
-            value={priceRange.min}
-            onChange={(e) => handlePriceRangeChange(e, "min")}
-            placeholder="Minimum price..."
-            className="px-2 py-1 border mb-5 mr-2"
-          />
-          <input
-            type="number"
-            value={priceRange.max}
-            onChange={(e) => handlePriceRangeChange(e, "max")}
-            placeholder="Maximum price..."
-            className="px-2 py-1 border mb-5 mr-2"
-          />
-          <select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            className="border px-2 py-1 "
-          >
-            <option value="">All Category</option>
-            {category?.map((categoryName) => (
-              <option className="" key={categoryName} value={categoryName}>
-                {categoryName}
-              </option>
-            ))}
+          <FormControl variant="outlined" className="mb-5 mr-2" size="small">
+            <InputLabel id="category-label">Category</InputLabel>
+            <Select
+              labelId="category-label"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              label="Category"
+              className="w-[200px]"
+            >
+              <MenuItem value="">
+                <em>All Category</em>
+              </MenuItem>
+              {category?.sort().map((categoryName) => (
+                <MenuItem
+                  key={categoryName}
+                  value={categoryName}
+                  className="capitalize"
+                >
+                  {categoryName}
+                </MenuItem>
+              ))}
+              {/* add more options based on the categories you have */}
+            </Select>
+          </FormControl>
+          <FormControl variant="outlined" className="mb-5 mr-2" size="small">
+            <InputLabel id="brand-label">Brand</InputLabel>
+            <Select
+              labelId="brand-label"
+              value={selectedBrand}
+              onChange={handleBrandChange}
+              label="Brand"
+              className="w-[200px]"
+            >
+              <MenuItem value="">
+                <em>All Brand</em>
+              </MenuItem>
+              {brand?.map((brandName) => (
+                <MenuItem key={brandName} value={brandName}>
+                  {brandName}
+                </MenuItem>
+              ))}
+              {/* add more options based on the categories you have */}
+            </Select>
+          </FormControl>
+        </div>
+        <div className="">
+          <div className="flex">
+            {/* <input
+              type="number"
+              value={priceRange.min}
+              onChange={(e) => handlePriceRangeChange(e, "min")}
+              placeholder="Minimum price..."
+              className="px-2 py-1 border mb-5 mr-2"
+              disabled
+            />
+            <input
+              type="number"
+              value={priceRange.max}
+              onChange={(e) => handlePriceRangeChange(e, "max")}
+              placeholder="Maximum price..."
+              className="px-2 py-1 border mb-5 mr-2"
+              disabled
+            /> */}
+          </div>
 
-            {/* add more options based on the categories you have */}
-          </select>
-          <select
-            value={selectedBrand}
-            onChange={handleBrandChange}
-            className="border px-2 py-1 "
-          >
-            <option value="">All Brand</option>
-            {brand?.map((brandName) => (
-              <option className="" key={brandName} value={brandName}>
-                {brandName}
-              </option>
-            ))}
+          <div className="flex gap-10">
+            <div className="flex justify-between">
+              <div className="w-[10px]">${priceRange.min}</div>
+              <Slider
+                value={[priceRange.min, priceRange.max]}
+                onChange={(e, newValue) => {
+                  setPriceRange({
+                    min: (newValue as number[])[0],
+                    max: (newValue as number[])[1],
+                  });
+                }}
+                // valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `$${value}`}
+                min={0}
+                max={2000}
+                className="w-[300px] mx-10"
+              />
+              <div className="mt-0.5">${priceRange.max}</div>
+            </div>
 
-            {/* add more options based on the categories you have */}
-          </select>
+            <Button
+              variant="outlined"
+              onClick={resetPriceRange}
+              className="px-2 py-1 border mb-5 mr-2 w-[150px]"
+            >
+              Reset Price
+            </Button>
+          </div>
         </div>
 
         <div className="relative w-full">
@@ -145,7 +209,9 @@ const ProductsPage = () => {
                   <td className="border px-4 py-2">{product.brand}</td>
                   <td className="border px-4 py-2">${product.price}</td>
                   <td className="border px-4 py-2">{product.stock} units</td>
-                  <td className="border px-4 py-2">{product.category}</td>
+                  <td className="border px-4 py-2 capitalize">
+                    {product.category}
+                  </td>
                 </tr>
               ))}
               {!isLoading && products.length === 0 && !error && (

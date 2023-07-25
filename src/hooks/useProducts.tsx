@@ -19,7 +19,7 @@ export const useProducts = () => {
   const [page, setPage] = useState(1);
 
   // Add state for price range
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
 
   // Add state for all products
   const [allProducts, setAllProducts] = useState<Product[]>([]);
